@@ -1,0 +1,85 @@
+[gd_scene load_steps=9 format=3 uid="uid://3sajoj5t0jxi"]
+
+[ext_resource type="Script" path="res://entities/top_down_character.gd" id="1_2gefv"]
+[ext_resource type="PackedScene" uid="uid://dgrmgos1fhq8q" path="res://components/control interface/control_interface_component.tscn" id="2_7bkxj"]
+[ext_resource type="PackedScene" uid="uid://b2bkeavxldsm2" path="res://components/weapon controller/weapon_controller.tscn" id="3_bgo2t"]
+[ext_resource type="PackedScene" uid="uid://bsjx0sidj1sn1" path="res://components/weapon controller/weapon_slot.tscn" id="4_p0vrl"]
+[ext_resource type="Resource" uid="uid://bdepbxnap80ss" path="res://weapons/rocket_weapon.tres" id="5_jam3v"]
+[ext_resource type="PackedScene" uid="uid://ecs52bgqe5jc" path="res://components/health component/health_component.tscn" id="5_x1u2k"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0trj1"]
+radius = 18.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_22kpx"]
+
+[node name="Player1" type="CharacterBody2D"]
+input_pickable = true
+motion_mode = 1
+script = ExtResource("1_2gefv")
+
+[node name="Control Interface" parent="." node_paths=PackedStringArray("weapon_controller") instance=ExtResource("2_7bkxj")]
+weapon_controller = NodePath("../Weapon Controller")
+
+[node name="Weapon Controller" parent="." instance=ExtResource("3_bgo2t")]
+
+[node name="Weapon Slot" parent="Weapon Controller" instance=ExtResource("4_p0vrl")]
+position = Vector2(20, 0)
+weapon = ExtResource("5_jam3v")
+
+[node name="Health Component" parent="." instance=ExtResource("5_x1u2k")]
+
+[node name="Torso" type="Line2D" parent="."]
+rotation = 1.5708
+points = PackedVector2Array(-10, 0, 10, 0)
+width = 20.0
+default_color = Color(0.175722, 0.388227, 0.641549, 1)
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="Head" type="Line2D" parent="."]
+rotation = 1.5708
+points = PackedVector2Array(0, 0, 0.001, 0)
+width = 15.0
+default_color = Color(1, 0.607843, 0.729412, 1)
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="Head2" type="Line2D" parent="Head"]
+position = Vector2(0, -7)
+points = PackedVector2Array(0, 0, 0.001, 0)
+width = 5.0
+default_color = Color(1, 0.607843, 0.729412, 1)
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="Left Hand" type="Line2D" parent="."]
+z_index = 1
+position = Vector2(9, -14)
+rotation = 1.5708
+points = PackedVector2Array(0, 0, 0.001, 0)
+width = 8.0
+default_color = Color(1, 0.607843, 0.729412, 1)
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="Right Hand" type="Line2D" parent="."]
+z_index = 1
+position = Vector2(9, 14)
+rotation = 1.5708
+points = PackedVector2Array(0, 0, 0.001, 0)
+width = 8.0
+default_color = Color(1, 0.607843, 0.729412, 1)
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = -3.14159
+shape = SubResource("CircleShape2D_0trj1")
+
+[node name="Interaction ShapeCast" type="ShapeCast2D" parent="."]
+shape = SubResource("CircleShape2D_22kpx")
+target_position = Vector2(25, 0)
+max_results = 1
+collision_mask = 64
+collide_with_areas = true
+collide_with_bodies = false

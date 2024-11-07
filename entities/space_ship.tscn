@@ -1,0 +1,54 @@
+[gd_scene load_steps=8 format=3 uid="uid://doswu036amw74"]
+
+[ext_resource type="Script" path="res://entities/space_ship.gd" id="1_oj7pc"]
+[ext_resource type="PackedScene" uid="uid://dgrmgos1fhq8q" path="res://components/control interface/control_interface_component.tscn" id="2_rlfsb"]
+[ext_resource type="PackedScene" uid="uid://ecs52bgqe5jc" path="res://components/health component/health_component.tscn" id="3_rqegy"]
+[ext_resource type="PackedScene" uid="uid://b2bkeavxldsm2" path="res://components/weapon controller/weapon_controller.tscn" id="4_k8j8y"]
+[ext_resource type="PackedScene" uid="uid://bsjx0sidj1sn1" path="res://components/weapon controller/weapon_slot.tscn" id="5_msuwd"]
+[ext_resource type="Resource" uid="uid://bdepbxnap80ss" path="res://weapons/rocket_weapon.tres" id="6_t57q7"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2mafg"]
+radius = 12.8
+height = 64.75
+
+[node name="Space Ship" type="RigidBody2D"]
+linear_damp = 0.5
+angular_damp = 2.0
+script = ExtResource("1_oj7pc")
+
+[node name="Control Interface" parent="." node_paths=PackedStringArray("weapon_controller") instance=ExtResource("2_rlfsb")]
+weapon_controller = NodePath("../Weapon Controller")
+
+[node name="Health Component" parent="." instance=ExtResource("3_rqegy")]
+max_hitpoints = 20
+
+[node name="Weapon Controller" parent="." instance=ExtResource("4_k8j8y")]
+
+[node name="Weapon Slot" parent="Weapon Controller" instance=ExtResource("5_msuwd")]
+position = Vector2(-10, 18)
+weapon = ExtResource("6_t57q7")
+
+[node name="Weapon Slot2" parent="Weapon Controller" instance=ExtResource("5_msuwd")]
+position = Vector2(-10, -18)
+weapon = ExtResource("6_t57q7")
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(32, 0, -32, 16, -22, 0, -32, -16)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_2mafg")
+
+[node name="Death Particles" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 30
+one_shot = true
+explosiveness = 1.0
+randomness = 0.33
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 40.0
+initial_velocity_max = 70.0
+scale_amount_min = 5.0
+scale_amount_max = 5.0
+color = Color(0.614448, 0.344917, 0.190371, 1)

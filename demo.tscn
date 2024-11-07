@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://vkfp3kvmwepy"]
+
+[ext_resource type="PackedScene" uid="uid://3sajoj5t0jxi" path="res://entities/player1.tscn" id="1_q0eeb"]
+[ext_resource type="PackedScene" uid="uid://bp2pvv4mu485l" path="res://entities/player2.tscn" id="2_1qtox"]
+[ext_resource type="PackedScene" uid="uid://doswu036amw74" path="res://entities/space_ship.tscn" id="3_86btg"]
+
+[node name="Demo" type="Node2D"]
+
+[node name="Player1" parent="." instance=ExtResource("1_q0eeb")]
+position = Vector2(257, 216)
+
+[node name="Player2" parent="." instance=ExtResource("2_1qtox")]
+position = Vector2(265, 386)
+
+[node name="Space Ship" parent="." instance=ExtResource("3_86btg")]
+position = Vector2(259, 111)
+gravity_scale = 0.0
+rotation_speed = 100000
